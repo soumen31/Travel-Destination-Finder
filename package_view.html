@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="title"></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .destination-header {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .destination-header h1 {
+      font-weight: 700;
+      color: #2c3e50;
+    }
+
+    .destination-image {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      margin-top: 20px;
+    }
+
+    .destination-description {
+      text-align: justify;
+      line-height: 1.8;
+      color: #444;
+    }
+
+    #image-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    #image-gallery img {
+      width: 280px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    #image-gallery img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container bg-white p-4 shadow-lg rounded-3 mt-4 mb-5">
+    <div id="destination-content">
+      <div class="destination-header">
+        <h1 id="destination-title"></h1>
+        <img id="destination-image" class="destination-image img-fluid mt-3" src="" alt="">
+      </div>
+      <div class="mt-4">
+        <p id="destination-description" class="destination-description"></p>
+      </div>
+
+      <h4 class="text-center mt-5 mb-3 fw-semibold text-primary">Photo Gallery</h4>
+      <div id="image-gallery" class="row justify-content-center"></div>
+    </div>
+
+    <div id="destination-list"></div>
+    <div id="map">
+        
+    </div>
+  </div>
+
+  <script>
+    const destinations = [
+      {
+        name: "Darjeeling",
+        region: "West Bengal",
+        climate: "temperate",
+        budget: "moderate",
+        min_bud: 5000,
+        max_bud: 15000,
+        price_type: "INR",
+        activity: "nature",
+        season: "summer",
+        duration: "week",
+        dp: "g.jpg",
+        img: ['g2.jpeg', 'g3.jpeg', 'g4.jpeg', 'g5.jpeg', 'g6.jpeg'],
+        title: "<span style=\"font-family: 'Times New Roman';\"> <span style='color: orange;'>The Queen</span> <span style='color: blue;'> of </span> <span style='color: green;'>Hills</span></span>",
+        desc: "Darjeeling, often called the “Queen of the Hills,” is one of India’s most enchanting hill stations, nestled in the foothills of the Eastern Himalayas in West Bengal. Famous for its breathtaking views of the snow-capped Kanchenjunga — the world’s third-highest peak — Darjeeling offers a perfect blend of natural beauty, colonial charm, and cultural richness.\nThe town is renowned worldwide for its tea plantations, producing the world-famous Darjeeling Tea, often called the “champagne of teas.” A visit to the lush tea estates provides a serene experience amid rolling green hills and crisp mountain air. The Darjeeling Himalayan Railway, fondly known as the “Toy Train,” is a UNESCO World Heritage Site that offers a nostalgic journey through misty valleys and picturesque landscapes.\nTourists can explore attractions like Tiger Hill for sunrise views over the Himalayas, the Batasia Loop, Peace Pagoda, Padmaja Naidu Himalayan Zoological Park, and the Himalayan Mountaineering Institute. The Mall Road and Chowrasta are perfect for leisurely walks, local handicrafts, and sampling Tibetan and Nepali cuisines such as momos and thukpa.\nDarjeeling’s diverse culture, blending influences from Nepal, Tibet, and Bengal, creates a warm and vibrant atmosphere. With its scenic beauty, pleasant climate, and rich heritage, Darjeeling remains a timeless destination for nature lovers, adventure seekers, and those seeking peace in the lap of the Himalayas. It truly captures the spirit of mountain serenity and cultural harmony.",
+        map: "<iframe src=\"https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3553.6982577869053!2d88.26228617402418!3d27.0396991546244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjfCsDAyJzIyLjkiTiA4OMKwMTUnNTMuNSJF!5e0!3m2!1sen!2sin!4v1762689549925!5m2!1sen!2sin\" width=\"100%\" height=\"350\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" style='border-radius: 30px;' class='mt-3'></iframe>"
+      },
+      {
+        name: "Manali, Himachal Pradesh",
+        region: "himachal pradesh",
+        climate: "arctic",
+        budget: "moderate",
+        min_bud: 10000,
+        max_bud: 20000,
+        price_type: "INR",
+        activity: "adventure",
+        season: "winter",
+        duration: "week",
+        dp: "m.jpeg",
+        img:['m2.jpeg', 'm3.jpeg', 'm4.jpeg', 'm5.jpeg', 'm6.jpeg'],
+        title: "<span style=\"font-family: 'Times New Roman';\"> <span style='color: orange;'>Manali</span> <span style='color: blue;'>  </span> <span style='color: green;'></span></span>",
+        desc: `A snow paradise perfect for skiing, paragliding, and scenic mountain trails Tourism in Manali","Manali, a picturesque hill station nestled in the Kullu Valley of Himachal Pradesh, is one of India’s most popular tourist destinations. Surrounded by snow-capped peaks, lush forests, and the gushing Beas River, Manali offers a perfect blend of adventure, tranquility, and natural beauty.\n Whether blanketed in snow during winter or blooming with flowers in summer, the town captivates visitors throughout the yearKnown as a hub for adventure sports, Manali offers thrilling experiences such as skiing in Solang Valley, paragliding over scenic landscapes, river rafting in the Beas, and trekking through lush trails like Hampta Pass and Bhrigu Lake.\n The nearby Rohtang Pass, often covered in snow even during summer, is a major attraction for tourists seeking breathtaking mountain views.Beyond its natural charm, Manali has a rich cultural and spiritual essence.\n The ancient Hadimba Temple, built amid cedar forests, and the Manu Temple reflect the region’s deep heritage. The Old Manali area offers a bohemian vibe with cozy cafés, local handicraft shops, and homestays that attract travelers from around the world.Manali also serves as a gateway to the high-altitude deserts of Lahaul and Spiti, making it a favorite stop for road trip enthusiasts. With its pleasant climate, warm hospitality, and diverse experiences — from adventure and relaxation to spirituality — Manali is truly a paradise for nature lovers, honeymooners, and explorers seeking peace amidst the majestic Himalayas.`,
+        map: "<iframe src=\"https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3553.6982577869053!2d88.26228617402418!3d27.0396991546244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjfCsDAyJzIyLjkiTiA4OMKwMTUnNTMuNSJF!5e0!3m2!1sen!2sin!4v1762768767864!5m2!1sen!2sin\" width=\"100%\" height=\"350\" style='border-radius: 30px;' class='mt-3' allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+      },
+      {
+        name: "Goa",
+        region: "goa",
+        climate: "tropical",
+        budget: "luxury",
+        min_bud:20000,
+        max_bud:40000,
+        price_type:"INR",
+        activity: "beach",
+        season: "winter",
+        duration: "weekend",
+        dp:"goa.jpg",
+        img:['goa2.jpeg', 'goa3.jpg', 'goa4.jpeg', 'goa5.jpeg', 'goa6.jpg'],
+        title:"<span style=\"font-family: 'Times New Roman';\"> <span style='color: orange;'>Goa</span> <span style='color: blue;'>  </span> <span style='color: green;'></span></span>",
+        desc: `Golden beaches, palm trees, and vibrant nightlife along the Arabian Sea.Goa, India’s most beloved coastal paradise, is renowned for its golden beaches, vibrant nightlife, and rich cultural heritage.\n Located along the Arabian Sea, Goa seamlessly blends Indian traditions with Portuguese influences, creating a unique atmosphere that attracts millions of tourists every year. With its sun-soaked shores, swaying palm trees, and laid-back lifestyle, Goa is the ultimate destination for relaxation, adventure, and celebration.\n
+        \n "The state is divided into North Goa and South Goa.\n each offering distinct experiences.\n North Goa is known for its energetic beaches such as Baga,\n Calangute, Anjuna, and Vagator, where travelers can enjoy water sports like parasailing, jet skiing, and banana rides\n. This region also boasts lively nightclubs, beach shacks, flea markets, and music festivals that make Goa a hotspot for party lovers".\n
+
+         "South Goa, on the other hand, is quieter and more serene, featuring pristine beaches like Palolem, Colva, and Agonda. It is ideal for those seeking peace, scenic beauty, and luxury resorts. Beyond beaches, Goa offers historical treasures including centuries-old churches, forts, and heritage homes that reflect its colonial past. Famous landmarks like Basilica of Bom Jesus, Fort Aguada, and Chapora Fort showcase its architectural grandeur".\n
+
+         "Goa’s local cuisine—featuring seafood, spicy curries, and coconut flavors—is another highlight for visitors.\n With its warm hospitality, tropical climate, and diverse attractions, Goa truly offers something for every traveler.\n Whether you're seeking adventure, culture, or relaxation, Goa remains one of India’s most enchanting and unforgettable tourist destinations.\n`,
+         map:"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!s1m3!1d750259.9826478441!2d73.34684721413633!3d15.350084481260595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbfba106336b741%3A0xeaf887ff62f34092!2sGoa!5e1!3m2!1sen!2sin!4v1763272930310!5m2!1sen!2sin\" width=\"100%\" height=\"350\" style='border-radius: 30px;' class='mt-3' allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+      },
+      {
+        name: "Jaipur, Rajasthan",
+        region: "rajasthan",
+        climate: "desert",
+        budget: "moderate",
+        min_bud: 25000,
+        max_bud:40000,
+        price_type:"INR",
+        activity: "cultural",
+        season: "winter",
+        duration: "week",
+        dp: "j.jpeg",
+        img:['j2.jpg', 'j3.jpg', 'j4.jpg', 'j5.jpeg', 'j6.jpg'],
+        description: `"The Pink City filled with forts, palaces, markets, and royal heritage. jaipur, the majestic capital of Rajasthan, is widely known as the Pink City due to its uniquely colored buildings that reflect royal charm and cultural grandeur. Steeped in history and architectural splendor, Jaipur is one of India’s most celebrated tourist destinations, offering a fascinating blend of heritage, tradition, and vibrant city life. Part of the famous Golden Triangle circuit, the city attracts millions of visitors eager to explore its palaces, forts, bustling markets, and timeless beauty\n".
+        \n"One of Jaipur’s biggest attractions is its grand forts—Amber Fort, with its hilltop location and sheesh mahal; Jaigarh Fort, known for its massive cannon; and Nahargarh Fort, offering panoramic views of the city\n. \"The iconic Hawa Mahal, with its honeycomb façade, stands as a symbol of Jaipur's royal past\n. Another highlight is the City Palace, a spectacular blend of Mughal and Rajput architecture, housing museums, courtyards, and royal artifacts\n. The nearby Jantar Mantar, a UNESCO World Heritage Site, showcases ancient astronomical instruments that reflect India’s scientific heritage\n"
+        "Beyond historical monuments, Jaipur offers colorful traditional markets like Johari Bazaar, Bapu Bazaar, and Tripolia Bazaar, where tourists can shop for gemstones, textiles, handicrafts, and traditional Rajasthani attire. The city is also famous for its vibrant festivals, such as the Jaipur Literature Festival, Teej, and Elephant Festival, which highlight local culture and arts"
+       " With its warm hospitality, rich cuisine, and captivating royal heritage, Jaipur provides an unforgettable travel experience for history lovers, families, photographers, and cultural explorers alike."`,
+       map:"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d173480.25399863906!2d75.6257410122862!3d26.885421393295022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4adf4c57e281%3A0xce1c63a0cf22e09!2sJaipur%2C%20Rajasthan!5e1!3m2!1sen!2sin!4v1763281975560!5m2!1sen!2sin\" width=\"100%\" height=\"350\" style='border-radius: 30px;' class='mt-3' allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+      },
+      {
+        name: "Andaman & Nicobar Islands",
+        region: "andaman & nicobar island",
+        climate: "tropical",
+        budget: "luxury",
+        min_bud:40000,
+        max_bud:60000,
+        price_type:"INR",
+        activity: "beach",
+        season: "summer",
+        duration: "two-weeks",
+        dp:"an.jpeg",
+        img: ['an2.jpeg', 'an3.jpeg', 'an4.jpeg', 'an5.jpeg', 'an6.jpeg'],
+        description: `"Tropical paradise known for crystal-clear beaches, coral reefs, and scuba diving.The Andaman and Nicobar Islands, located in the Bay of Bengal, are one of India’s most breathtaking tropical destinations, known for their crystal-clear waters, white-sand beaches, and lush evergreen forests. This exotic archipelago of over 500 islands offers a perfect escape for travelers seeking serenity, adventure, and natural beauty far from the rush of city life. With its rich marine biodiversity, vibrant coral reefs, and pristine environment, the islands attract nature lovers, honeymooners, and adventure enthusiasts from around the world\n"
+        \n"One of the most popular destinations is Havelock Island (Swaraj Dweep), home to the world-famous Radhanagar Beach, known for its powdery white sand and turquoise water. It is also a hotspot for scuba diving, snorkeling, and underwater sea-walking, offering an opportunity to explore stunning coral formations and diverse marine life. Neil Island (Shaheed Dweep) is another serene location known for its natural rock formations, peaceful beaches, and breathtaking sunsets"
+       " Port Blair, the capital city, is rich in history and culture. The iconic Cellular Jail, a national memorial, reflects India’s freedom struggle and offers a poignant experience through its light-and-sound show. Adventure seekers can enjoy activities like jet skiing, kayaking through mangroves, and trekking to limestone caves or volcanic sites such as Barren Island, home to India’s only active volcano"
+        "With its warm hospitality, tropical climate, and unmatched natural charm, the Andaman and Nicobar Islands offer a magical blend of relaxation, adventure, and rich heritage—making them one of India’s most captivating and unforgettable travel destinations."`,
+        map:"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6126075.973430052!2d87.9267363906665!3d10.182947219832647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3064a00f2b650ff3%3A0xce80055648fccb2c!2sAndaman%20and%20Nicobar%20Islands!5e1!3m2!1sen!2sin!4v1763282309727!5m2!1sen!2sin\" width=\"100%\" height=\"350\" style='border-radius: 30px;' class='mt-3' allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+      }
+    ];
+  
+    const urlParams = new URLSearchParams(window.location.search);
+    const destinationName = urlParams.get('destination');
+    
+    if (destinationName) {
+      const destination = destinations.find(d => d.name === destinationName);
+
+      if (destination) {
+        document.getElementById('title').textContent = destination.title || destination.name;
+        document.getElementById('destination-title').innerHTML = destination.title || destination.name;
+        document.getElementById('destination-image').src = 'img/'+ (destination.dp || destination.image);
+        document.getElementById('destination-description').textContent = destination.desc || destination.description;
+        document.getElementById('destination-image').alt = destination.name;
+        document.getElementById('destination-image').style.display = 'block';
+        document.getElementById('map').innerHTML = destination.map;
+
+        for (let i = 0; i < destination.img.length; i++) {
+          document.getElementById('image-gallery').innerHTML += `
+            <div class="col-md-4 col-sm-6">
+              <img src="img/${destination.img[i]}" alt="" class="img-fluid rounded shadow-sm">
+            </div>`;
+        }
+      }
+    }
+  </script>
+
+</body>
+
+</html>
